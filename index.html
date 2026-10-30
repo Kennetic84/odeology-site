@@ -45,12 +45,13 @@ nav a { text-decoration: none; font-family: var(--mono); font-size: 12px; letter
 nav a:hover { color: var(--fg); }
 
 /* hero */
-.hero { position: relative; min-height: min(78vh, 760px); display: flex; align-items: flex-end; overflow: hidden; }
-.hero img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; filter: saturate(1.05) contrast(1.05); }
-.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,.15) 0%, rgba(10,10,11,.25) 45%, var(--bg) 100%); }
-.hero .wrap { position: relative; z-index: 1; width: 100%; padding-block: 140px 48px; }
+.hero { position: relative; min-height: min(80vh, 760px); display: flex; align-items: center; overflow: hidden; }
+.hero img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; filter: saturate(1.05) contrast(1.05); }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,.2) 0%, rgba(10,10,11,.35) 60%, var(--bg) 100%); }
+.hero .wrap { position: relative; z-index: 1; width: 100%; padding-block: 96px; display: grid; justify-items: center; }
+.hero .mark { width: min(440px, 62vw); height: auto; display: block; filter: drop-shadow(0 0 30px rgba(0,0,0,.55)); }
 .hero h1 { margin: 0; font-family: var(--display); font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; line-height: .9; font-size: clamp(44px, 9.5vw, 132px); color: var(--fg); opacity: .94; text-wrap: balance; }
-.hero p { margin: 18px 0 0; display: flex; gap: 10px 26px; flex-wrap: wrap; }
+.hero p { position: absolute; left: 0; right: 0; bottom: 22px; margin: 0; display: flex; justify-content: center; gap: 10px 26px; flex-wrap: wrap; padding-inline: 16px; }
 
 /* sections */
 section { padding-block: 72px; border-top: 1px solid var(--line); }
@@ -117,6 +118,7 @@ footer .sel { user-select: all; }
   nav { gap: 14px; }
 }
 @media (max-width: 520px) {
+  .hero { min-height: 520px; }
   nav a.opt { display: none; }
   header.top img { height: 32px; }
 }
@@ -140,7 +142,7 @@ footer .sel { user-select: all; }
   <div class="hero">
     <img class="bg" src="img/hero.jpg" alt="Red lasers fanning over the crowd at Odeology KRFTWRK, October 2026">
     <div class="wrap">
-      <h1>Techno, visual art &amp; more</h1>
+      <h1><img class="mark" src="img/logo-hero.png" alt="Odeology"></h1>
       <p><span class="label">Odense, Denmark</span><span class="label">Next: Sat 12.12.2026 · Dynamo</span></p>
     </div>
   </div>
