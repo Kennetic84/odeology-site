@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Odeology</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Odeology – techno, visual art + surprises in Odense, Denmark.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+body { margin: 0; }
+/* Layout: one dark club room. Full-bleed photo opener, then a flyer-style event list (date left, time right), archive, photo wall. */
+:root {
+  --bg: #0a0a0b;
+  --panel: #131215;
+  --fg: #ddd7ce;          /* warm light grey, as on the posters */
+  --muted: #8d877f;
+  --line: #2a2829;
+  --laser: #ff3b2f;       /* used only for "upcoming" and focus */
+  --display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --body: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.55; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--laser); outline-offset: 3px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.label { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+/* header */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+header.top img { height: 38px; width: auto; display: block; }
+nav { display: flex; gap: 22px; flex-wrap: wrap; }
+nav a { text-decoration: none; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+nav a:hover { color: var(--fg); }
+
+/* hero */
+.hero { position: relative; min-height: min(78vh, 760px); display: flex; align-items: flex-end; overflow: hidden; }
+.hero img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; filter: saturate(1.05) contrast(1.05); }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,.15) 0%, rgba(10,10,11,.25) 45%, var(--bg) 100%); }
+.hero .wrap { position: relative; z-index: 1; width: 100%; padding-block: 140px 48px; }
+.hero h1 { margin: 0; font-family: var(--display); font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; line-height: .9; font-size: clamp(44px, 9.5vw, 132px); color: var(--fg); opacity: .94; text-wrap: balance; }
+.hero p { margin: 18px 0 0; display: flex; gap: 10px 26px; flex-wrap: wrap; }
+
+/* sections */
+section { padding-block: 72px; border-top: 1px solid var(--line); }
+section > .wrap > h2 { margin: 0 0 32px; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-family: var(--display); font-weight: 900; text-transform: uppercase; letter-spacing: -.01em; font-size: clamp(30px, 4.6vw, 52px); line-height: 1; }
+
+/* event rows: poster grammar, date left / time right / venue below */
+.events { display: grid; gap: 0; }
+.event { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.5fr) auto; gap: 12px 32px; align-items: start; padding-block: 28px; border-bottom: 1px solid var(--line); }
+.event:first-child { border-top: 1px solid var(--line); }
+.date { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 6vw, 72px); line-height: .9; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.date small { display: block; margin-top: 10px; font-family: var(--mono); font-weight: 400; font-size: 12px; letter-spacing: .14em; color: var(--muted); }
+.ev-main { min-width: 0; display: grid; gap: 8px; }
+.ev-main h3 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 26px; line-height: 1.1; text-transform: uppercase; }
+.ev-main .lineup { margin: 0; font-size: 17px; }
+.ev-main .meta { margin: 0; color: var(--muted); font-size: 15px; }
+.tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--laser); }
+.tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--laser); box-shadow: 0 0 10px var(--laser); }
+.ev-side { display: grid; justify-items: end; gap: 14px; text-align: right; }
+.time { font-family: var(--mono); font-size: 15px; font-variant-numeric: tabular-nums; }
+.btn { display: inline-block; text-decoration: none; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; padding: 11px 16px; border: 1px solid var(--fg); color: var(--fg); white-space: nowrap; }
+.btn:hover { background: var(--fg); color: var(--bg); }
+.btn.dim { border-color: var(--line); color: var(--muted); }
+.btn.dim:hover { background: transparent; color: var(--fg); border-color: var(--muted); }
+
+/* archive */
+.past { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.past img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
+.credits { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 20px; margin: 18px 0 0; font-size: 15px; }
+.credits dt { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.credits dd { margin: 0; }
+
+/* gallery */
+.gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.gallery button { padding: 0; border: 0; background: var(--panel); cursor: zoom-in; display: block; }
+.gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; transition: opacity .2s; }
+.gallery button:hover img { opacity: .8; }
+.gallery button:nth-child(1), .gallery button:nth-child(8) { grid-column: span 2; grid-row: span 2; }
+.gallery button:nth-child(1) img, .gallery button:nth-child(8) img { height: 100%; }
+.photo-credit { margin: 14px 0 0; }
+.lightbox { position: fixed; inset: 0; z-index: 20; background: rgba(5,5,6,.94); display: flex; align-items: center; justify-content: center; padding: max(20px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(20px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); cursor: zoom-out; }
+.lightbox[hidden] { display: none; }
+.lightbox img { max-height: 100%; max-width: 100%; object-fit: contain; }
+
+/* about */
+.about { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 48px; }
+.about p { margin: 0 0 16px; max-width: 62ch; }
+.about .lede { font-size: clamp(21px, 2.4vw, 28px); line-height: 1.3; font-weight: 600; }
+.facts { display: grid; gap: 18px; align-content: start; }
+.facts div { display: grid; gap: 4px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+
+footer { border-top: 1px solid var(--line); padding-block: 40px 56px; }
+footer .wrap { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+footer img { height: 64px; width: auto; display: block; opacity: .9; }
+footer .links { display: flex; gap: 22px; flex-wrap: wrap; }
+footer .sel { user-select: all; }
+
+@media (max-width: 860px) {
+  .event { grid-template-columns: minmax(0, 1fr) auto; }
+  .ev-main { grid-column: 1 / -1; grid-row: 2; }
+  .ev-side { grid-row: 1; grid-column: 2; }
+  .past, .about { grid-template-columns: minmax(0, 1fr); }
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery button:nth-child(1), .gallery button:nth-child(8) { grid-column: span 2; grid-row: auto; }
+  nav { gap: 14px; }
+}
+@media (max-width: 520px) {
+  nav a.opt { display: none; }
+  header.top img { height: 32px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a href="#top" aria-label="Odeology home"><img src="img/logo.png" alt="Odeology"></a>
+    <nav aria-label="Main">
+      <a href="#events">Events</a>
+      <a href="#archive" class="opt">Archive</a>
+      <a href="#photos">Photos</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <img class="bg" src="img/hero.jpg" alt="Red lasers fanning over the crowd at Odeology KRFTWRK, October 2026">
+    <div class="wrap">
+      <h1>Techno, visual art + surprises</h1>
+      <p><span class="label">Odense, Denmark</span><span class="label">Next: Sat 12.12.2026 · Dynamo</span></p>
+    </div>
+  </div>
+
+  <section id="events">
+    <div class="wrap">
+      <h2>Upcoming <span class="label">Age 21+ · Door: MobilePay only</span></h2>
+      <div class="events">
+        <article class="event">
+          <div class="date">12.12<small>Saturday · 2026</small></div>
+          <div class="ev-main">
+            <span class="tag">Upcoming</span>
+            <h3>Odeology at Dynamo</h3>
+            <p class="lineup">Line-up TBA</p>
+            <p class="meta">Dynamo, Odense · Light, lasers and visual art as part of the night</p>
+          </div>
+          <div class="ev-side">
+            <span class="time">21:00 – 02:00</span>
+            <a class="btn" href="https://ra.co/promoters/85846" target="_blank" rel="noopener">Tickets on RA</a>
+          </div>
+        </article>
+        <article class="event">
+          <div class="date">31.12<small>Thursday · New Year's Eve</small></div>
+          <div class="ev-main">
+            <span class="tag">Upcoming</span>
+            <h3>Odeology NYE</h3>
+            <p class="lineup">Line-up TBA</p>
+            <p class="meta">Dynamo, Odense · Into 2027 until sunrise</p>
+          </div>
+          <div class="ev-side">
+            <span class="time">22:00 – 06:00</span>
+            <a class="btn" href="https://ra.co/promoters/85846" target="_blank" rel="noopener">Tickets on RA</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="archive">
+    <div class="wrap">
+      <h2>Archive <span class="label">Last night out</span></h2>
+      <div class="past">
+        <img src="img/dsc04997.jpg" alt="Pink and blue lasers forming a cone over the dancefloor at KRFTWRK">
+        <div>
+          <div class="date">10.10<small>Saturday · 2026</small></div>
+          <h3 style="margin:22px 0 0;font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppercase;line-height:1.1">KRFTWRK</h3>
+          <dl class="credits">
+            <dt>DJs</dt><dd>Benjamin Damage, Lacchesi, Merkula, SONYDIAM</dd>
+            <dt>LED grid</dt><dd>Grundstuff</dd>
+            <dt>Lasers + LED</dt><dd>Henrik Sæderup</dd>
+            <dt>House tech</dt><dd>Nicolas Zinck</dd>
+            <dt>Photo</dt><dd>Hans Kristian Hannibal-Bach</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="photos">
+    <div class="wrap">
+      <h2>Photos <span class="label">KRFTWRK · 10.10.2026</span></h2>
+      <div class="gallery" id="gallery">
+        <button type="button"><img src="img/dsc05674.jpg" alt="DJ in red light behind the decks" loading="lazy"></button>
+        <button type="button"><img src="img/dsc05520.jpg" alt="Blue beams over the crowd" loading="lazy"></button>
+        <button type="button"><img src="img/dsc05231.jpg" alt="DJ silhouetted in orange light with lasers" loading="lazy"></button>
+        <button type="button"><img src="img/dsc05423.jpg" alt="Laser pyramid in blue haze" loading="lazy"></button>
+        <button type="button"><img src="img/dsc04572.jpg" alt="Blue light burst behind the DJ" loading="lazy"></button>
+        <button type="button"><img src="img/dsc05825.jpg" alt="Warm laser fan over raised hands" loading="lazy"></button>
+        <button type="button"><img src="img/dsc05770.jpg" alt="DJ in yellow light" loading="lazy"></button>
+        <button type="button"><img src="img/dsc06347.jpg" alt="Crowd cheering at the booth under blue LED bars" loading="lazy"></button>
+        <button type="button"><img src="img/dsc05027.jpg" alt="Blue and purple laser web" loading="lazy"></button>
+        <button type="button"><img src="img/dsc05649.jpg" alt="DJ under a red beam" loading="lazy"></button>
+      </div>
+      <p class="photo-credit label">All photos: Hans Kristian Hannibal-Bach</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <h2>About</h2>
+      <div class="about">
+        <div>
+          <p class="lede">Odeology is a volunteer-run collective putting on techno nights in Odense.</p>
+          <p>We book dark, hypnotic techno from Denmark and abroad, and treat light as part of the line-up. Lasers, LED walls and visual artists get the same attention as the DJs.</p>
+          <p>Every night is built by people who love the music: crew, artists and volunteers. If you want to help out, write to us.</p>
+        </div>
+        <div class="facts">
+          <div><span class="label">Instagram</span><a href="https://www.instagram.com/odeologyodense/" target="_blank" rel="noopener">@odeologyodense</a></div>
+          <div><span class="label">Resident Advisor</span><a href="https://ra.co/promoters/85846" target="_blank" rel="noopener">ra.co/promoters/85846</a></div>
+          <div><span class="label">Email</span><span class="sel">odeologyodense@gmail.com</span></div>
+          <div><span class="label">Home</span><span>Dynamo, Odense</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="img/logo.png" alt="Odeology">
+    <div class="links">
+      <a class="label" href="https://www.instagram.com/odeologyodense/" target="_blank" rel="noopener">Instagram</a>
+      <a class="label" href="https://ra.co/promoters/85846" target="_blank" rel="noopener">Resident Advisor</a>
+      <span class="label">© 2026 Odeology</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden><img alt=""></div>
+
+<script>
+  const lb = document.getElementById('lightbox');
+  const lbImg = lb.querySelector('img');
+  document.getElementById('gallery').addEventListener('click', e => {
+    const img = e.target.closest('button')?.querySelector('img');
+    if (!img) return;
+    lbImg.src = img.src; lbImg.alt = img.alt; lb.hidden = false;
+  });
+  lb.addEventListener('click', () => { lb.hidden = true; });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.hidden = true; });
+</script>
+</body>
+</html>
