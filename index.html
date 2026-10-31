@@ -123,6 +123,19 @@ section > .wrap > h2 { margin: 0 0 32px; display: flex; align-items: baseline; j
 .contact-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .contact-status { font-size: 15px; color: var(--muted); }
 button.btn { background: transparent; cursor: pointer; font: inherit; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+.cta { position: relative; overflow: hidden; padding-block: 110px; }
+.cta-bg { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,10,11,.93) 0%, rgba(10,10,11,.65) 55%, rgba(10,10,11,.3) 100%), url(img/dsc06347.jpg) center / cover; }
+.cta .wrap { position: relative; }
+.cta-inner { display: grid; gap: 16px; justify-items: start; }
+.cta h2 { margin: 0; font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(30px, 4.6vw, 56px); line-height: .95; max-width: 16ch; text-wrap: balance; }
+.cta-sub { margin: 0; color: var(--fg); opacity: .85; max-width: 50ch; }
+.roles { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; max-width: 620px; }
+.roles li { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; padding: 7px 11px; border: 1px solid rgba(221,215,206,.35); background: rgba(10,10,11,.55); }
+.btn-red { background: var(--laser) !important; color: #fff !important; border-color: var(--laser) !important; padding: 15px 24px !important; font-size: 13px !important; box-shadow: 0 0 24px rgba(255,59,47,.45); }
+.btn-red:hover { box-shadow: 0 0 34px rgba(255,59,47,.7); }
+.cta .contact { margin-top: 10px; }
+.cta .field input, .cta .field textarea { background: rgba(19,18,21,.9); }
+@media (max-width: 860px) { .cta { padding-block: 72px; } .cta-bg { background: linear-gradient(180deg, rgba(10,10,11,.6) 0%, rgba(10,10,11,.92) 70%), url(img/dsc06347.jpg) center / cover; } }
 footer { border-top: 1px solid var(--line); padding-block: 40px 56px; }
 footer .wrap { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
 footer img { height: 64px; width: auto; display: block; opacity: .9; }
@@ -155,6 +168,7 @@ footer .sel { user-select: all; }
       <a href="#archive" class="opt">Archive</a>
       <a href="#photos">Photos</a>
       <a href="#about">About</a>
+      <a href="#crew" class="opt">Join</a>
     </nav>
   </div>
 </header>
@@ -248,16 +262,7 @@ footer .sel { user-select: all; }
         <div>
           <p class="lede">Odeology is a volunteer-run collective putting on techno nights in Odense.</p>
           <p>We book dark, hypnotic techno from Denmark and abroad, and light is a big part of every night, with lasers, LED walls and visuals built for the room.</p>
-          <p>Every night is built by people who love the music: crew, artists and volunteers. Want to be part of the crew behind the next one?</p>
-          <p><button type="button" class="btn" id="contact-open" aria-expanded="false" aria-controls="contact">Get in touch</button></p>
-          <form id="contact" class="contact" hidden novalidate>
-            <div class="field"><label for="c-name" class="label">Name</label><input id="c-name" name="name" type="text" autocomplete="name" required></div>
-            <div class="field"><label for="c-email" class="label">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
-            <div class="field"><label for="c-phone" class="label">Phone (optional)</label><input id="c-phone" name="phone" type="tel" autocomplete="tel"></div>
-            <div class="field"><label for="c-msg" class="label">Message</label><textarea id="c-msg" name="message" rows="4" placeholder="Tell us a bit about yourself and how you'd like to help" required></textarea></div>
-            <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
-            <div class="contact-row"><button type="submit" class="btn">Send</button><span class="contact-status" id="contact-status" role="status"></span></div>
-          </form>
+          <p>Every night is built by people who love the music: crew, artists and volunteers.</p>
         </div>
         <div class="facts">
           <div><span class="label">Instagram</span><a href="https://www.instagram.com/odeologyodense/" target="_blank" rel="noopener">@odeologyodense</a></div>
@@ -267,6 +272,21 @@ footer .sel { user-select: all; }
       </div>
     </div>
   </section>
+<section class="cta" id="crew"><div class="cta-bg"></div><div class="wrap"><div class="cta-inner">
+            <p class="label">Volunteers wanted</p>
+            <h2>Want to be part of the crew behind the next one?</h2>
+            <ul class="roles"><li>Build-up</li><li>Production on the night</li><li>Safe space crew</li><li>Break-down</li><li>Booking</li><li>PR</li></ul>
+<p class="cta-sub">Experience valued, but not needed.</p>
+            <p><button type="button" class="btn btn-red" id="contact-open" aria-expanded="false" aria-controls="contact">Get in touch</button></p>
+          <form id="contact" class="contact" hidden novalidate>
+            <div class="field"><label for="c-name" class="label">Name</label><input id="c-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="c-email" class="label">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="c-phone" class="label">Phone (optional)</label><input id="c-phone" name="phone" type="tel" autocomplete="tel"></div>
+            <div class="field"><label for="c-msg" class="label">Message</label><textarea id="c-msg" name="message" rows="4" placeholder="Tell us a bit about yourself and how you'd like to help" required></textarea></div>
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+            <div class="contact-row"><button type="submit" class="btn">Send</button><span class="contact-status" id="contact-status" role="status"></span></div>
+          </form>
+          </div></div></section>
 </main>
 
 <footer>
