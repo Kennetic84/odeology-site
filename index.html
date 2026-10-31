@@ -113,6 +113,16 @@ section > .wrap > h2 { margin: 0 0 32px; display: flex; align-items: baseline; j
 .facts { display: grid; gap: 18px; align-content: start; }
 .facts div { display: grid; gap: 4px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
 
+.contact { display: grid; gap: 14px; margin-top: 8px; max-width: 520px; }
+.contact[hidden] { display: none; }
+.field { display: grid; gap: 6px; }
+.field input, .field textarea { font: inherit; font-size: 16px; color: var(--fg); background: var(--panel); border: 1px solid var(--line); padding: 11px 12px; border-radius: 0; width: 100%; }
+.field input:focus, .field textarea:focus { outline: 2px solid var(--laser); outline-offset: 1px; border-color: transparent; }
+.field textarea { resize: vertical; min-height: 110px; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.contact-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.contact-status { font-size: 15px; color: var(--muted); }
+button.btn { background: transparent; cursor: pointer; font: inherit; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
 footer { border-top: 1px solid var(--line); padding-block: 40px 56px; }
 footer .wrap { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
 footer img { height: 64px; width: auto; display: block; opacity: .9; }
@@ -239,7 +249,15 @@ footer .sel { user-select: all; }
           <p class="lede">Odeology is a volunteer-run collective putting on techno nights in Odense.</p>
           <p>We book dark, hypnotic techno from Denmark and abroad, and light is a big part of every night, with lasers, LED walls and visuals built for the room.</p>
           <p>Every night is built by people who love the music: crew, artists and volunteers. Want to be part of the crew behind the next one?</p>
-          <p><a class="btn" href="mailto:odeologyodense@gmail.com?subject=Get%20in%20touch">Get in touch</a></p>
+          <p><button type="button" class="btn" id="contact-open" aria-expanded="false" aria-controls="contact">Get in touch</button></p>
+          <form id="contact" class="contact" hidden novalidate>
+            <div class="field"><label for="c-name" class="label">Name</label><input id="c-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="c-email" class="label">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="c-phone" class="label">Phone (optional)</label><input id="c-phone" name="phone" type="tel" autocomplete="tel"></div>
+            <div class="field"><label for="c-msg" class="label">Message</label><textarea id="c-msg" name="message" rows="4" placeholder="Tell us a bit about yourself and how you'd like to help" required></textarea></div>
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+            <div class="contact-row"><button type="submit" class="btn">Send</button><span class="contact-status" id="contact-status" role="status"></span></div>
+          </form>
         </div>
         <div class="facts">
           <div><span class="label">Instagram</span><a href="https://www.instagram.com/odeologyodense/" target="_blank" rel="noopener">@odeologyodense</a></div>
@@ -306,6 +324,32 @@ footer .sel { user-select: all; }
     const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
     if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) show(cur + (dx < 0 ? 1 : -1));
     x0 = null;
+  });
+  const cOpen = document.getElementById('contact-open');
+  const cForm = document.getElementById('contact');
+  const cStatus = document.getElementById('contact-status');
+  cOpen.addEventListener('click', () => {
+    cForm.hidden = !cForm.hidden;
+    cOpen.setAttribute('aria-expanded', String(!cForm.hidden));
+    if (!cForm.hidden) document.getElementById('c-name').focus();
+  });
+  cForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!cForm.checkValidity()) { cStatus.textContent = 'Please fill in name, a valid email and a message.'; return; }
+    const data = Object.fromEntries(new FormData(cForm));
+    if (data._honey) return;
+    data._subject = 'odeology.dk: message from ' + data.name;
+    data._template = 'table';
+    data._captcha = 'false';
+    const btn = cForm.querySelector('button[type=submit]');
+    btn.disabled = true; cStatus.textContent = 'Sending…';
+    try {
+      const r = await fetch('https://formsubmit.co/ajax/odeologyodense@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) });
+      if (!r.ok) throw new Error(r.status);
+      cForm.reset(); cStatus.textContent = 'Thanks! We\'ll get back to you soon.';
+    } catch (err) {
+      cStatus.textContent = 'Could not send. Write to odeologyodense@gmail.com instead.';
+    } finally { btn.disabled = false; }
   });
 </script>
 </body>
